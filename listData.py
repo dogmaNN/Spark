@@ -1,6 +1,6 @@
 #listData / __init__.py
 
-wordList = []
+#wordList = []
 
 memeList = ["https://tenor.com/view/bee-eyebrow-raise-vurge-bee-gif-6443281501236067345",
             "https://tenor.com/view/rock-one-eyebrow-raised-rock-staring-the-rock-gif-22113367",
