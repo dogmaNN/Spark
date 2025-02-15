@@ -10,6 +10,8 @@ intents = discord.Intents.all()
 intents.message_content = True
 bot = commands.Bot(command_prefix = "$", intents = intents)
 
+adminMode = False
+talkingMode = True
 
 @bot.event
 #當機器人完成啟動
@@ -21,15 +23,29 @@ async def on_ready():
 @bot.event
 #回訊息
 async def on_message(message):
+    global talkingMode, adminMode
+
     #排除自己訊息
     if message.author == bot.user:
         return
+    if message.content == "$adminMode" and message.author.id == 839133432008540191:
+        await message.channel.send("載入中....")
+        embedVar = discord.Embed(title=f"歡迎 {message.author.name}", description="已啟用管理模式")
+        await message.channel.send(embed=embedVar)
+        adminMode = True
 
-    if message.content == "$meme":
+    elif message.content == "$meme":
         await message.channel.send(random.choice(listData.memeList))
-    elif message.content != "閉嘴":
+        
+    #you can opening it with talkingMode, but there's only i can do it lol
+    elif message.content == "$talkingMode" and adminMode:
+        if talkingMode:
+            await message.channel.send(random.choice(listData.wordList))
+        talkingMode ^= True
+    
+    elif message.content != "閉嘴" and talkingMode:
         await message.channel.send(message.content)
-    elif message.content == "閉嘴":
+    elif message.content == "閉嘴" and talkingMode:
         await message.channel.send("我不要")
 
 
